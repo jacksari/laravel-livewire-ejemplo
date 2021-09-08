@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+
+use Illuminate\Support\Facades\Storage;
 use App\Models\Post;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -16,7 +18,7 @@ class ListPosts extends Component
     public $cant = '5';
     public $readyToLoad = false;
 
-    protected $listeners = ['render-list' => 'render'];
+    protected $listeners = ['render-list' => 'render', 'delete'];
 
     protected $queryString = [
         'cant' => ['except' => '5'],
@@ -54,5 +56,17 @@ class ListPosts extends Component
 
     public function loadPost(){
         $this->readyToLoad = true;
+    }
+
+    public function delete(Post $post){
+
+        //dd($post->id);
+        
+        Storage::delete([$post->image]);
+        
+        $post->delete();
+        
+        $this->emitTo('list-posts','render-list');
+
     }
 }

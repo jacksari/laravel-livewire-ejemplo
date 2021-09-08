@@ -32,10 +32,19 @@
                 <x-jet-label value="Título del post"/>
                 <x-jet-input wire:model='title' type="text" class="flex-1 my-2 w-full" placeholder="Buscar post" />
                 <x-jet-input-error for="title"/>
+
                 
-                <x-jet-label value="Contenido del post"/>
-                <textarea placeholder="Contenido del post" wire:model="content" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm my-2 w-full" rows="6"></textarea>
-                <x-jet-input-error for="content"/>
+                <div wire:ignore wire:key="MyId" class="mb-4">
+                        
+                    <x-jet-label value="Contenido del post"/>
+
+                    <textarea
+                        id="content"
+                        wire:model="content" 
+                        class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm my-2 w-full" rows="6"
+                    ></textarea>
+                    <x-jet-input-error for="content"/>
+                </div>
 
                 <div>
                     <input type="file" wire:model="image">
@@ -60,4 +69,24 @@
         </x-slot>
 
     </x-jet-dialog-modal>
+
+    @push('js')
+    
+        
+        <script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
+
+        <script>
+            ClassicEditor
+            .create(document.querySelector('#content'))
+            .then(editor => {
+                editor.model.document.on('change:data', () => {
+                    @this.set('content', editor.getData())
+                })
+            })
+            .catch(error => {
+                console.error(error);
+            });   
+        </script>
+        
+    @endpush
 </div>

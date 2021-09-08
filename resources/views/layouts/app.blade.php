@@ -14,7 +14,11 @@
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         
+
+        
         @livewireStyles
+
+        @stack('css')
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
@@ -44,6 +48,8 @@
 
         @livewireScripts
 
+        @stack('js')
+
         <script>
             Livewire.on('alert', function(message){
                 Swal.fire(
@@ -53,5 +59,32 @@
                 )
             })
         </script>
+
+        <script>
+            Livewire.on('deletePost', function(title){
+                Swal.fire({
+                    title: '¿Está usted seguro de esto?',
+                    text: `Se eliminará el post ${title}`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.emitTo('list-posts', 'delete', title);
+                            Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                    }
+                })
+            })
+        
+    </script>
+
+        
+
     </body>
 </html>

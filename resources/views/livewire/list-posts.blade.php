@@ -100,7 +100,10 @@
                             <td class=" px-6 py-4  whitespace-nowrap text-sm font-medium">
                                 <div class="flex items-center justify-around h-full">
                                     @livewire('edit-post', ['post' => $post], key($post->id))
-                                    @livewire('delete-post', ['post' => $post], key($post->id.$post->title))
+                                    <i wire:click="$emit('deletePost', {{$post->id}})"
+                                        class="mx-1 far fa-trash-alt font-bold text-white py-2 px-2 rounded-lg cursor-pointer bg-red-600 hover:bg-red-500">
+
+                                    </i>
                                 </div>
                             </td>
                         </tr>

@@ -14,13 +14,18 @@ class DeletePost extends Component
         $this->post = $post;
     }
 
-    public function deletePost(){
+    protected $listeners = ['delete'];
+
+    public function delete(Post $post){
+
         
-        Storage::delete([$this->post->image]);
-        $post = Post::find($this->post->id);
+        
+        //Storage::delete([$post->image]);
+        
         $post->delete();
+        dd($post->title);
         $this->emitTo('list-posts','render-list');
-        $this->emit('alert', 'El post se eliminó satisfactoriamente');
+
     }
 
     public function render()

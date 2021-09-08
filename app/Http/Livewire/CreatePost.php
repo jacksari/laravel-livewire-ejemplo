@@ -13,7 +13,7 @@ class CreatePost extends Component
 
     public $open = false;
 
-    public $title, $content, $image, $identificador;
+    public $title, $content , $image, $identificador;
 
     public function mount(){
         $this->identificador = rand();
@@ -25,9 +25,9 @@ class CreatePost extends Component
         'image' => 'required|image|max:2048'
     ];
 
-    public function updated($propertyName){
-        $this->validateOnly($propertyName);
-    }
+    //public function updated($propertyName){
+    //    $this->validateOnly($propertyName);
+    //}
 
     public function render()
     {
@@ -38,7 +38,11 @@ class CreatePost extends Component
         $this->open = !$this->open;
     }
 
+
+
     public function save(){
+
+        //dd($this->content);
         
         // Validar post
         $this->validate();
